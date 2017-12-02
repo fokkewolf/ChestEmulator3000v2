@@ -1,0 +1,24 @@
+﻿{
+  "CharCount": 34,
+  "CommonCountPerChar": 8,
+  "RareCountPerChar": 5,
+  "EpicCountPerChar": 3,
+  "LegendaryCountPerChar": 4,
+  "CosmeticsCount":  300,
+  "CharacterName": "Ash",
+
+  "StartingLevel": 3,
+  "DesiredLevel": 5,
+  "WantAllCards": false,
+  "WantAllCommonForChar": true,
+  "WantAllRareForChar": true,
+  "WantAllEpicForChar": true,
+  "WantAllLegendaryForChar": true,
+  
+  "AttemptsCount": 100,
+  "ItemsPerchest": 5,
+  "CardUniquePerChest": true
+  
+  
+
+}

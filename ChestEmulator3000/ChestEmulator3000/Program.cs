@@ -1,6 +1,7 @@
 ﻿using ChestEmulator3000.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,12 +10,6 @@ namespace ChestEmulator3000
 {
     class Program
     {
-        static int commonCountPerChar = 8;
-        static int rareCountPerChar = 5;
-        static int epicCountPerChar = 3;
-        static int legendaryCountPerChar = 4;
-        static int CharCount = 34;
-
         public static Int32 GetIntValueFromConsole()
         {
             Int32 result = 0;
@@ -92,7 +87,7 @@ namespace ChestEmulator3000
                 if (iRare < rareCount)
                 {
                     iRare++;
-                    wanted = wantAllCards || (wantAllRareForCharacter && iRare <= rareCountPerChar);
+                    wanted = wantAllCards || (wantAllRareForCharacter && iRare <= cfg.RareCountPerChar);
                     var newRareCard = new ChestItemModel(startingLevel, EnumGrade.Rare, iRare, false, wanted ? characterName : "");
                     RadiantChestItems.Add(newRareCard);
                     if (wanted)
@@ -103,7 +98,7 @@ namespace ChestEmulator3000
                 if (iEpic < epicCount)
                 {
                     iEpic++;
-                    wanted = wantAllCards || (wantAllEpicForCharacter && iEpic <= epicCountPerChar);
+                    wanted = wantAllCards || (wantAllEpicForCharacter && iEpic <= cfg.EpicCountPerChar);
                     var newEpicCard = new ChestItemModel(startingLevel, EnumGrade.Epic, iEpic, false, wanted ? characterName : "");
                     RadiantChestItems.Add(newEpicCard);
                     if (wanted)
@@ -114,7 +109,7 @@ namespace ChestEmulator3000
                 if (iLegendary < legendaryCount)
                 {
                     iLegendary++;
-                    wanted = wantAllCards || (wantAllLegendaryForCharacter && iLegendary <= legendaryCountPerChar);
+                    wanted = wantAllCards || (wantAllLegendaryForCharacter && iLegendary <= cfg.LegendaryCountPerChar);
                     var newLegendaryCard = new ChestItemModel(startingLevel, EnumGrade.Legendary, iLegendary, false, wanted ? characterName : "");
                     RadiantChestItems.Add(newLegendaryCard);
                     if (wanted)
@@ -124,7 +119,7 @@ namespace ChestEmulator3000
                 }
 
                 iCommon++;
-                wanted = wantAllCards || (wantAllCommonForCharacter && iCommon <= commonCountPerChar);
+                wanted = wantAllCards || (wantAllCommonForCharacter && iCommon <= cfg.CommonCountPerChar);
                 var newCommonCard = new ChestItemModel(startingLevel, EnumGrade.Common, iCommon, false, wanted ? characterName : "");
                 RadiantChestItems.Add(newCommonCard);
                 if (wanted)
@@ -183,69 +178,38 @@ namespace ChestEmulator3000
             #endregion
             return totalChests / attemptCount;
         }
-
+        static ConfigModel cfg;
         static bool workFlow()
         {
-            Console.WriteLine("StartingLevel: ");
-            int startingLevel = GetIntValueFromConsole();
-            Console.WriteLine("DesiredLevel: ");
-            int desiredLevel = GetIntValueFromConsole();
-            Console.WriteLine("AttemptsCount: ");
-            int attemptCount = GetIntValueFromConsole();
-            Console.WriteLine("Items in chest: ");
-            int itemsInChest = GetIntValueFromConsole();
-            Console.WriteLine("CardUniquePerChest: ");
-            bool cardUniquePerChest = GetBooleanValueFromConsole();
-
-            Console.WriteLine("WantAllCards: ");
-            bool wantAllCards = GetBooleanValueFromConsole();
-
-            bool wantAllCommonForChar = wantAllCards;
-            bool wantAllRareForChar = wantAllCards;
-            bool wantAllEpicForChar = wantAllCards;
-            bool wantAllLegendaryForChar = wantAllCards;
-
-            if (!wantAllCards)
-            {
-                Console.WriteLine("WantAllCommonForChar: ");
-                wantAllCommonForChar = GetBooleanValueFromConsole();
-                Console.WriteLine("WantAllRareForChar: ");
-                wantAllRareForChar = GetBooleanValueFromConsole();
-                Console.WriteLine("WantAllEpicForChar: ");
-                wantAllEpicForChar = GetBooleanValueFromConsole();
-                Console.WriteLine("WantAllLegendaryForChar: ");
-                wantAllLegendaryForChar = GetBooleanValueFromConsole();
-            }
-            Console.WriteLine("Character Name, Lol: ");
-            string charName = Console.ReadLine();
-            if (String.IsNullOrWhiteSpace(charName)) charName = "Ash";
-
+            var x = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "config.json");
+            cfg = Newtonsoft.Json.JsonConvert.DeserializeObject<ConfigModel>(x);
+            
             //For convenience so that we don't need to delve into chest filling code to affect quantities
-            var commonCount = commonCountPerChar * CharCount;
-            var rareCount = rareCountPerChar * CharCount;
-            var epicCount = epicCountPerChar * CharCount;
-            var legendaryCount = legendaryCountPerChar * CharCount;
-            var cosmeticsCount = 300;
+            var commonCount = cfg.CommonCountPerChar * cfg.CharCount;
+            var rareCount = cfg.RareCountPerChar * cfg.CharCount;
+            var epicCount = cfg.EpicCountPerChar * cfg.CharCount;
+            var legendaryCount = cfg.LegendaryCountPerChar * cfg.CharCount;
 
+           
             List<ChestItemModel> personWantedCards = new List<ChestItemModel>();
             var RadiantChestItems = GetRadiantChestContentsAndWantedItems(
                 out personWantedCards, 
-                startingLevel, 
+                cfg.StartingLevel, 
                 commonCount, 
                 rareCount, 
                 epicCount, 
                 legendaryCount, 
-                cosmeticsCount,
-                wantAllCards,
-                wantAllCommonForChar,
-                wantAllRareForChar,
-                wantAllEpicForChar,
-                wantAllLegendaryForChar,
-                charName);
-            RadiantChestModel chest = new RadiantChestModel(RadiantChestItems, getQualityRatesDictionary(), itemsInChest, cardUniquePerChest);
+                cfg.CosmeticsCount,
+                cfg.WantAllCards,
+                cfg.WantAllCommonForChar,
+                cfg.WantAllRareForChar,
+                cfg.WantAllEpicForChar,
+                cfg.WantAllLegendaryForChar,
+                cfg.CharacterName);
+            RadiantChestModel chest = new RadiantChestModel(RadiantChestItems, getQualityRatesDictionary(), cfg.ItemsPerchest, cfg.CardUniquePerChest);
 
 
-            var avgChestsNeeded = getAverageNeededChestCounts(personWantedCards, chest, attemptCount, desiredLevel);
+            var avgChestsNeeded = getAverageNeededChestCounts(personWantedCards, chest, cfg.AttemptsCount, cfg.DesiredLevel);
 
             Console.WriteLine(String.Format("Average Chests Needed - {0}", avgChestsNeeded));
 
