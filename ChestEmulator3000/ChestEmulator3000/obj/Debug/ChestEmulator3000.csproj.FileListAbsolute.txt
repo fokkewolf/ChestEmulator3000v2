@@ -1,0 +1,12 @@
+D:\Work\ChestEmulator3000\ChestEmulator3000\bin\Debug\ChestEmulator3000.exe.config
+D:\Work\ChestEmulator3000\ChestEmulator3000\bin\Debug\ChestEmulator3000.exe
+D:\Work\ChestEmulator3000\ChestEmulator3000\bin\Debug\ChestEmulator3000.pdb
+D:\Work\ChestEmulator3000\ChestEmulator3000\obj\Debug\ChestEmulator3000.exe
+D:\Work\ChestEmulator3000\ChestEmulator3000\obj\Debug\ChestEmulator3000.pdb
+D:\Work\ChestEmulator3000\ChestEmulator3000\obj\Debug\ChestEmulator3000.csprojResolveAssemblyReference.cache
+C:\Users\Fokkewolf\Source\Repos\ChestEmulator3000v2\ChestEmulator3000\ChestEmulator3000\bin\Debug\ChestEmulator3000.exe.config
+C:\Users\Fokkewolf\Source\Repos\ChestEmulator3000v2\ChestEmulator3000\ChestEmulator3000\obj\Debug\ChestEmulator3000.exe
+C:\Users\Fokkewolf\Source\Repos\ChestEmulator3000v2\ChestEmulator3000\ChestEmulator3000\obj\Debug\ChestEmulator3000.pdb
+C:\Users\Fokkewolf\Source\Repos\ChestEmulator3000v2\ChestEmulator3000\ChestEmulator3000\obj\Debug\ChestEmulator3000.csprojResolveAssemblyReference.cache
+C:\Users\Fokkewolf\Source\Repos\ChestEmulator3000v2\ChestEmulator3000\ChestEmulator3000\bin\Debug\ChestEmulator3000.exe
+C:\Users\Fokkewolf\Source\Repos\ChestEmulator3000v2\ChestEmulator3000\ChestEmulator3000\bin\Debug\ChestEmulator3000.pdb
